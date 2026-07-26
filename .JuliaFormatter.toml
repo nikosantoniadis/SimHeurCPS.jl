@@ -1,0 +1,4 @@
+style = "sciml"
+margin = 92
+indent = 4
+always_for_in = true
