@@ -1,6 +1,6 @@
 name = "SimHeurCPS"
 uuid = "c6b53f33-b761-4ede-94c8-236d450f59b8"
-version = "1.0.0-DEV"
+version = "0.1.0-DEV"
 authors = ["Nikolaos Antoniadis <nikos@nikosantoniadis.eu> and contributors"]
 
 [deps]
