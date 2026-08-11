@@ -123,6 +123,6 @@ function initial_solution(prob::HasInitialSolution) end
 Generate a random feasible candidate for black-box problems.
 Defined by the problem instance.
 
-For anesthesia/FES: a randomly sampled parameter vector within bounds.
+For Medical CPS: a randomly sampled parameter vector within bounds.
 """
 function random_candidate(prob::BlackBoxProblem) end
