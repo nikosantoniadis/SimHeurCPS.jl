@@ -45,7 +45,7 @@ end
 
 # ---- RUN ----
 prob = ToyProblem(5, 0.01)
-ev = ToyEvaluator(100, Random.MersenneTwister(42))
+ev = ToyEvaluator(10000, Random.MersenneTwister(42))
 alg = ToyRVNS(0.1, Random.MersenneTwister(123))
 
 x_best, fx_best, budget = SimHeurCPS.optimize(alg, prob, ev; eval_budget=1000)

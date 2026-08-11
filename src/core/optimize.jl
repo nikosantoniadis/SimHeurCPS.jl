@@ -84,11 +84,10 @@ Returns (x, estimated_objective, evaluations_consumed).
 """
 function evaluate_and_account(ev::AbstractEvaluator, prob, x, budget, spent)
     if spent >= budget
-        error("Evaluation budget exhausted at $(spent)/$(budget).")
+        error("Budget exhausted.")
     end
-    fx, _, used = evaluate(ev, prob, x)
-    actual_used = min(used, budget - spent)
-    return x, fx, actual_used
+    fx, _, _ = evaluate(ev, prob, x)
+    return x, fx, 1   # ← one evaluation = one budget unit
 end
 
 # ---- The extension contract ----
