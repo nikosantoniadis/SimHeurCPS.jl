@@ -1,10 +1,29 @@
 using SimHeurCPS
 using Random
-
+"""
 # A toy problem: minimize f(x) = sum((x .- 0.5).^2) on [0,1]^n, with noise
 struct ToyProblem <: HasInitialSolution
     n::Int
     noise_std::Float64
+end
+"""
+struct ToyProblem <: SimHeurCPS.BlackBoxProblem  # ← changed from HasInitialSolution
+    n::Int
+    noise_std::Float64
+end
+
+# What the optimizer calls to get a starting point
+function SimHeurCPS.random_candidate(prob::ToyProblem)
+    return rand(prob.n)  # random point in [0,1]^n
+end
+
+# What the evaluator calls for each MCS replication
+function SimHeurCPS.evaluate_stochastic(prob::ToyProblem, x, rng::AbstractRNG; antithetic::Bool=false)
+    noise = randn(rng) * prob.noise_std
+    if antithetic
+        noise = -noise
+    end
+    return sum((x .- 0.5).^2) + noise
 end
 
 # A toy evaluator: plain MCS, fixed reps, no variance reduction
@@ -45,7 +64,10 @@ end
 
 # ---- RUN ----
 prob = ToyProblem(5, 0.01)
-ev = ToyEvaluator(10000, Random.MersenneTwister(42))
+
+ev = SimHeurCPS.MCEvaluator(8, 100000, 0.01, false, false, Random.MersenneTwister(42))
+# n_min=8 ensures every thread gets at least 2 replications with 4 threads
+#ev = ToyEvaluator(10000, Random.MersenneTwister(42))
 alg = ToyRVNS(0.1, Random.MersenneTwister(123))
 
 x_best, fx_best, budget = SimHeurCPS.optimize(alg, prob, ev; eval_budget=1000)

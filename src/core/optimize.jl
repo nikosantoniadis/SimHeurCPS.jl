@@ -51,7 +51,9 @@ function optimize(alg::AbstractMetaheuristic,
                   ev::AbstractEvaluator;
                   eval_budget::Int)
     x = random_candidate(prob)
+
     _, fx, used = evaluate_and_account(ev, prob, x, eval_budget, 0)
+
     budget_remaining = eval_budget - used
     stagnation = 0
 
@@ -86,8 +88,9 @@ function evaluate_and_account(ev::AbstractEvaluator, prob, x, budget, spent)
     if spent >= budget
         error("Budget exhausted.")
     end
-    fx, _, _ = evaluate(ev, prob, x)
-    return x, fx, 1   # ← one evaluation = one budget unit
+    fx, _, used = evaluate(ev, prob, x)
+
+    return x, fx, used   # ← one evaluation = one budget unit
 end
 
 # ---- The extension contract ----
