@@ -1,5 +1,11 @@
-# SimHeurCPS.jl
+# SimHeurCPS.jl — Archived
 
-A simheuristic framework for robust, explainable optimisation of safety-critical cyber-physical systems.
+This repository was an early exploration of the SimHeurCPS architecture in Julia.
 
-SimHeurCPS couples metaheuristic search with adaptive Monte Carlo simulation — including control variates and antithetic variates for variance reduction — to solve stochastic combinatorial optimisation problems under uncertainty. The architecture is modular and algorithm-agnostic: RVNS is the first search engine, with GA, PSO, and ensemble metaheuristics arriving via multiple dispatch. 
+**The actively maintained, peer-reviewed version is implemented in C++20:**
+
+→ [github.com/nikosantoniadis/SimHeurCPS](https://github.com/nikosantoniadis/SimHeurCPS) *(will be public upon paper acceptance)*
+
+The C++ version retains the same modular architecture, adds deterministic timing, OpenMP parallelism, and static memory allocation for safety-critical CPS deployment.
+
+**Why the language change?** Safety-critical cyber-physical systems require deterministic execution and a regulatory certification path — constraints that Julia's JIT compiler cannot satisfy. C++20 resolves this while maintaining high-level expressiveness through compile-time polymorphism.
